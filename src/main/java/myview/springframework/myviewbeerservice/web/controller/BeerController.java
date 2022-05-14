@@ -15,20 +15,20 @@ public class BeerController {
     public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId){
 
         //TODO with service
-      //  return new ResponseEntity<>(BeerDto.builder().build(), HttpStatus.OK);
-        return new ResponseEntity<>(BeerDto.builder()
-                .id(UUID.randomUUID())
+        return new ResponseEntity<>(BeerDto.builder().build(), HttpStatus.OK);
+      //  return new ResponseEntity<>(BeerDto.builder();
+/*                .id(UUID.randomUUID())
                 .beerName("Galaxy Cat")
-                .build(), HttpStatus.OK);
+                .build(), HttpStatus.OK);*/
     }
 
     @PostMapping
     public ResponseEntity<BeerDto> saveNewBeer(@RequestBody BeerDto beerDto){
         //TODO Impl
-       // return new ResponseEntity<>(HttpStatus.CREATED);
-        return new ResponseEntity<>(BeerDto.builder()
+        return new ResponseEntity<>(HttpStatus.CREATED);
+       /* return new ResponseEntity<>(BeerDto.builder()
                 .id(UUID.randomUUID())
-                .build(), HttpStatus.CREATED);
+                .build(), HttpStatus.CREATED);*/
     }
 
     @PutMapping("/{beerId}")
