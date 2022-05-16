@@ -3,6 +3,7 @@ package myview.springframework.myviewbeerservice.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import myview.springframework.myviewbeerservice.domain.Beer;
 import myview.springframework.myviewbeerservice.repositories.BeerRepository;
+import myview.springframework.myviewbeerservice.services.BeerService;
 import myview.springframework.myviewbeerservice.web.model.BeerDto;
 import myview.springframework.myviewbeerservice.web.model.BeerStyleEnum;
 import org.junit.jupiter.api.Test;
@@ -47,11 +48,11 @@ class BeerControllerTest {
     ObjectMapper objectMapper;
 
     @MockBean
-    BeerRepository beerRepository;
+    BeerService beerService;
 
     @Test
     void getBeerById() throws Exception {
-        given(beerRepository.findById(any())).willReturn(Optional.of(Beer.builder().build()));
+        given(beerService.getById(any())).willReturn(getValidBeerDto());
 
         mockMvc.perform(get("/api/v1/beer/{beerId}", UUID.randomUUID().toString())
                 .param("iscold", "yes")
@@ -80,7 +81,7 @@ class BeerControllerTest {
     void saveNewBeer() throws Exception {
         BeerDto beerDto =  getValidBeerDto();
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
-
+        given(beerService.saveNewBeer(any())).willReturn(getValidBeerDto());
         ConstrainedFields fields = new ConstrainedFields(BeerDto.class);
 
         mockMvc.perform(post("/api/v1/beer/")
@@ -103,6 +104,7 @@ class BeerControllerTest {
 
     @Test
     void updateBeerById() throws Exception {
+        given(beerService.updateBeer(any(), any())).willReturn(getValidBeerDto());
         BeerDto beerDto =  getValidBeerDto();
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
 
@@ -117,7 +119,7 @@ class BeerControllerTest {
                 .beerName("Nice Ale")
                 .beerStyleEnum(BeerStyleEnum.ALE)
                 .price(new BigDecimal("9.99"))
-                .upc(123123123123L)
+                .upc("123123123123")
                 .build();
 
     }
